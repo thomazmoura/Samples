@@ -10,26 +10,32 @@ namespace EnumHandler
             string input;
             do
             {
-                Console.WriteLine("Digite o valor a ser verificado (q para sair)");
+                Console.WriteLine("Type the byte you want to check (q to exit):");
                 input = Console.ReadLine();
-                var flags = (RuleLevel)byte.Parse(input);
-                Console.WriteLine($"O valor digitado corresponde a: {flags}");
+                var inputAsFlags = (RuleLevel)byte.Parse(input);
 
-                foreach(var flag in Enum.GetValues(typeof(RuleLevel)).Cast<RuleLevel>())
+                Console.WriteLine($"The input is equals to: {inputAsFlags}");
+
+                foreach (var ruleLevelFlag in Enum.GetValues(typeof(RuleLevel)).Cast<RuleLevel>())
                 {
-                    if((flags & flag) > 0)
-                        Console.WriteLine($"Possui acesso ao nível {flag}");
+                    if (inputAsFlags.HasFlag(ruleLevelFlag))
+                        Console.WriteLine($"Has access to {ruleLevelFlag}");
                 }
 
-                if((flags & (RuleLevel.Level1 | RuleLevel.Level2 | RuleLevel.Level3)) > 0)
-                    Console.WriteLine("Possui acesso a um dos três primeiros níveis");
+                if (inputAsFlags.HasFlag(RuleLevel.Level1 | RuleLevel.Level2 | RuleLevel.Level3))
+                    Console.WriteLine("Has Access to any of the first three levels");
+
+                if(!inputAsFlags.HasFlag(RuleLevel.Level4 | RuleLevel.Level5 | RuleLevel.Level6))
+                    Console.WriteLine("The user doesn't have access to all the last three levels");
+
             } while (input != "q" && input != "exit");
         }
     }
 
     [Flags]
-    public enum RuleLevel: byte
+    public enum RuleLevel : byte
     {
+        NoAcess = 0,
         Level1 = 1,
         Level2 = 2,
         Level3 = 4,
