@@ -19,6 +19,7 @@ namespace CronScheduler
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+                    services.Configure<Configuracao>(hostContext.Configuration.GetSection(nameof(Configuracao)));
                 });
     }
 }
