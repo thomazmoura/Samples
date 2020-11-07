@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImplicitInstantiation
+namespace ImplicitInstantiationGotcha
 {
     class Program
     {
@@ -38,3 +38,4 @@ namespace ImplicitInstantiation
         public string ValorDoTeste { get; set; }
     }
 }
+
