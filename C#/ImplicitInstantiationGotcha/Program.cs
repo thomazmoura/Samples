@@ -6,36 +6,35 @@ namespace ImplicitInstantiationGotcha
     {
         static void Main(string[] args)
         {
-            var inicializacaoQueFunciona = new ClassePai
+            var workingInitialization = new ParentClass
             {
-                Propriedade = new ClasseDaPropriedade
+                Property = new PropertyClass
                 {
-                    ValorDoTeste = "FirulaDefinida"
+                    TestValue = "Works Nicely"
                 }
 
             };
-            ClassePai inicializacaoQueCagaTudo = new ClassePai
+            Console.WriteLine(workingInitialization.Property.TestValue);
+
+            ParentClass brokenInitialization = new ParentClass
             {
-                Propriedade = {  }
+                Property = {
+                    TestValue = "Should Work"
+                }
             };
 
-            Console.WriteLine(inicializacaoQueFunciona.Propriedade.ValorDoTeste);
-            Console.WriteLine(inicializacaoQueCagaTudo.Propriedade.ValorDoTeste);
+            Console.WriteLine(brokenInitialization.Property.TestValue);
         }
     }
 
-    class ClassePai
+    class ParentClass
     {
-        public ClasseDaPropriedade Propriedade { get; set; }
+        public PropertyClass Property { get; set; } = new PropertyClass();
     }
 
-    class ClasseDaPropriedade
+    class PropertyClass
     {
-        public ClasseDaPropriedade()
-        {
-            ValorDoTeste = "Firula";
-        }
-        public string ValorDoTeste { get; set; }
+        public string TestValue { get; set; }
     }
 }
 
