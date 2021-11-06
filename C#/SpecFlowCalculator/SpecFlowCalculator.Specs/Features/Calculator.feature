@@ -12,13 +12,13 @@ Scenario: Add two numbers
 	When the two numbers are added
 	Then the result should be 120
 
-Scenario: Subtract two numbers
+Scenario: Subtract a number by a lesser number
 	Given the first number is 70
 	And the second number is 50
 	When the two numbers are subtracted
 	Then the result should be 20
 
-Scenario: Subtract two numbers
+Scenario: Subtract a number by a greater number
 	Given the first number is 50
 	And the second number is 70
 	When the two numbers are subtracted
