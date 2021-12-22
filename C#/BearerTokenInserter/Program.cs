@@ -7,11 +7,11 @@ IHost host = Host.CreateDefaultBuilder(args)
             .ConfigureHttpClient((serviceProvider, httpClient) => {
                 var systemConfig = serviceProvider.GetService<SystemConfig>();
                 var logger = serviceProvider.GetService<ILogger<ISampleAPIClient>>();
-                if(systemConfig is null || logger is null)
+                var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+                if(systemConfig is null || logger is null || httpClientFactory is null)
                     return;
 
-                var authHttpClient = new HttpClient();
-
+                var authHttpClient = httpClientFactory.CreateClient();
                 var discoveryEndpoint = authHttpClient.GetDiscoveryDocumentAsync(systemConfig.AuthorityURL).Result;
                 if(discoveryEndpoint.IsError)
                     throw new Exception($"Unabled to contact {systemConfig.AuthorityURL}");
