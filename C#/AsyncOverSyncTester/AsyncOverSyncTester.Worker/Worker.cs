@@ -15,13 +15,13 @@ public class Worker : BackgroundService
         var currentTime = DateTime.Now;
         while (!stoppingToken.IsCancellationRequested)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 _logger.LogInformation($"Calling weather API. Time since last execution: {DateTime.Now - currentTime}");
 
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                var result = _weatherAPIService.CallWeatherForecastApiAndReturnResult();
+                var result = await _weatherAPIService.CallWeatherForecastApiAndReturnResult();
 
                 var worker = 0;
                 var io = 0;
@@ -44,9 +44,9 @@ public class WeatherAPIService
         _httpClient = httpClient;
     }
 
-    public string CallWeatherForecastApiAndReturnResult()
+    public async Task<string> CallWeatherForecastApiAndReturnResult()
     {
-        var actionResult = _httpClient.GetAsync("https://localhost:7223/weatherforecast").Result;
-        return actionResult.Content.ReadAsStringAsync().Result;
+        var actionResult = await _httpClient.GetAsync("https://localhost:7223/weatherforecast");
+        return await actionResult.Content.ReadAsStringAsync();
     }
 }
