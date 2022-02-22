@@ -25,7 +25,7 @@ public class GuidComparison
     }
 
     [Fact]
-    public void GuidComparison_WhenInsideAnReferenceObject_IsFalseAndDistinctDoesNotWork()
+    public void GuidComparison_WhenInsideAReferenceObject_IsFalseAndDistinctDoesNotWork()
     {
         var object1 = new IdClass(){ Id = new Guid("675b818f-f7fa-4f1d-b689-48d883690fdc") };
         var object2 = new IdClass(){ Id = new Guid("675b818f-f7fa-4f1d-b689-48d883690fdc") };
@@ -36,7 +36,7 @@ public class GuidComparison
     }
 
     [Fact]
-    public void GuidComparison_WhenInsideAnRecord_IsTrueAndDistinctWorks()
+    public void GuidComparison_WhenInsideARecord_IsTrueAndDistinctWorks()
     {
         var object1 = new IdRecord(new Guid("675b818f-f7fa-4f1d-b689-48d883690fdc"));
         var object2 = new IdRecord(new Guid("675b818f-f7fa-4f1d-b689-48d883690fdc"));
