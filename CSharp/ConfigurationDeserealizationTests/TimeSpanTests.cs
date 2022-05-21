@@ -21,41 +21,41 @@ public class TimeSpanConfigurationTests
     }
 
     [Fact]
-    public void InitializedTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
+    public void ConfiguredTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
     {
-        _deserializedConfiguration.InitializedTimeSpan.Should().Be(_expectedConfiguredTimeSpan);
+        _deserializedConfiguration.ConfiguredTimeSpan.Should().Be(_expectedConfiguredTimeSpan);
     }
 
     [Fact]
-    public void NullableInitializedTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
+    public void NullableConfiguredTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
     {
-        _deserializedConfiguration.NullableInitializedTimeSpan.Should().Be(_expectedConfiguredTimeSpan);
+        _deserializedConfiguration.NullableConfiguredTimeSpan.Should().Be(_expectedConfiguredTimeSpan);
     }
 
     [Fact]
-    public void TimeSpan_WhenDeserialized_ShouldNotBeEmpty()
+    public void UnsetTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
     {
-        _deserializedConfiguration.TimeSpan.Should().Be(_expectedDefaultTimeSpan);
+        _deserializedConfiguration.UnsetTimeSpan.Should().Be(_expectedDefaultTimeSpan);
     }
 
     [Fact]
-    public void NullableTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
+    public void NullableUnsetTimeSpan_WhenDeserialized_ShouldNotBeEmpty()
     {
-        _deserializedConfiguration.NullableTimeSpan.Should().Be(_expectedDefaultTimeSpan);
+        _deserializedConfiguration.NullableUnsetTimeSpan.Should().Be(_expectedDefaultTimeSpan);
     }
 
     private class ConfigurationClass
     {
         public ConfigurationClass()
         {
-            TimeSpan = TimeSpan.FromMinutes(5);
-            NullableTimeSpan = TimeSpan.FromMinutes(5);
+            UnsetTimeSpan = TimeSpan.FromMinutes(5);
+            NullableUnsetTimeSpan = TimeSpan.FromMinutes(5);
         }
 
-        public TimeSpan InitializedTimeSpan{ get; set; }
-        public TimeSpan? NullableInitializedTimeSpan{ get; set; }
-        public TimeSpan TimeSpan{ get; set; }
-        public TimeSpan? NullableTimeSpan{ get; set; }
+        public TimeSpan ConfiguredTimeSpan{ get; set; }
+        public TimeSpan? NullableConfiguredTimeSpan{ get; set; }
+        public TimeSpan UnsetTimeSpan{ get; set; }
+        public TimeSpan? NullableUnsetTimeSpan{ get; set; }
     }
 }
 
