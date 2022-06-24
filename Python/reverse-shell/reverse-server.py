@@ -15,7 +15,7 @@ sys.tracebacklimit = 0
 
 def connection() :
     _socket = socket.socket()
-    _socket.bind(destination_ip, destination_port)
+    _socket.bind((destination_ip, destination_port))
     _socket.listen(1) # listen only a single time
     remote_socket, remote_ip = _socket.accept()
     print(f'remote connection: {remote_ip}')
