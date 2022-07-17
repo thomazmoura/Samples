@@ -9,7 +9,6 @@ namespace CustomStringEnumerator.Tests
     // Do not change the name of this class
     public class CustomStringEnumerator :  IEnumerable<string>
     {
-        private readonly HashSet<char> numberCharacters = new HashSet<char>(){'0','1','2','3','4','5','6','7','8','9'};
         private readonly IEnumerable<string> _originalCollection;
         private readonly EnumeratorConfig _enumeratorConfig;
         /// <summary> Constructor </summary>
@@ -17,6 +16,9 @@ namespace CustomStringEnumerator.Tests
         /// <exception cref="System.ArgumentNullException">If an config is null</exception>
         public CustomStringEnumerator(IEnumerable<string> collection, EnumeratorConfig config)
         {
+            if(config == null)
+                throw new ArgumentNullException($"The {config} paramater is required");
+
             _originalCollection = collection;
             _enumeratorConfig = config;
         }
@@ -25,14 +27,11 @@ namespace CustomStringEnumerator.Tests
         {
             foreach(var item in _originalCollection)
             {
-                var firstCharacter = item[0];
-                var firstCharacterLower = item.ToLower()[0];
-                var firstCharacterUpper = item.ToUpper()[0];
                 if(
                     (_enumeratorConfig.MinLength < 0 || item.Length >= _enumeratorConfig.MinLength) &&
                     (_enumeratorConfig.MaxLength < 0 || item.Length <= _enumeratorConfig.MaxLength) &&
-                    (_enumeratorConfig.StartWithCapitalLetter == false || firstCharacter == firstCharacterUpper && firstCharacter != firstCharacterLower) &&
-                    (_enumeratorConfig.StartWithDigit == false || numberCharacters.Contains(firstCharacter) )
+                    (_enumeratorConfig.StartWithCapitalLetter == false || !String.IsNullOrWhiteSpace(item) && item.Length > 0 && Char.IsUpper(item[0])) &&
+                    (_enumeratorConfig.StartWithDigit == false || !String.IsNullOrWhiteSpace(item) && item.Length > 0 && Char.IsNumber(item[0]) )
                 )
                     yield return item;
             }
@@ -77,6 +76,7 @@ namespace CustomStringEnumerator.Tests
         [InlineData(true, new[]{"Any string", "abc", "no", "yep"}, new []{"Any string"})]
         [InlineData(true, new[]{"any string", "abc", "no", "yep"}, new string[]{})]
         [InlineData(true, new[]{"any string", "Abc", "NO", "Yep"}, new []{"Abc", "NO", "Yep"})]
+        [InlineData(true, new[]{"", null, "   "}, new string[]{})]
         public void WhenGivenAStringCollectionWithStartWithCapitalLetter_ReturnsAFilteredStringCollection(bool startWithCapitalLetter, string[] inputCollection, string[] filteredInputCollection)
         {
             var config = new EnumeratorConfig() { StartWithCapitalLetter = startWithCapitalLetter };
@@ -89,6 +89,7 @@ namespace CustomStringEnumerator.Tests
         [InlineData(true, new[]{"1Any string", "2abc", "3esdf", "4asdf"}, new []{"1Any string", "2abc", "3esdf", "4asdf"})]
         [InlineData(true, new[]{"any string", "abc", "no", "yep"}, new string[]{})]
         [InlineData(true, new[]{"any string", "2Abc", "3NO", "Yep"}, new []{"2Abc", "3NO"})]
+        [InlineData(true, new[]{"", null, "   "}, new string[]{})]
         public void WhenGivenAStringCollectionWithStartWithDigit_ReturnsAFilteredStringCollection(bool startWithDigit, string[] inputCollection, string[] filteredInputCollection)
         {
             var config = new EnumeratorConfig() { StartWithDigit = startWithDigit };

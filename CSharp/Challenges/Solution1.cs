@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 
 public class Solution {
-    HashSet<char> numberCharacters = new HashSet<char>(){'0','1','2','3','4','5','6','7','8','9'};
     public String solution(String s) {
         char c = s[0];
-        var lowerC = s.ToLower()[0];
-        var upperC = s.ToUpper()[0];
-        if ( c == upperC && c != lowerC ) {
+        if ( Char.IsUpper(c) ) {
             return "upper";
-        } else if (c == lowerC && c != upperC) {
+        } else if (Char.IsLower(c)) {
             return "lower";
-        } else if (numberCharacters.Contains(c)) {
+        } else if (Char.IsDigit(c)) {
             return "digit";
         } else {
             return "other";
