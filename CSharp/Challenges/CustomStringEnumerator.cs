@@ -7,31 +7,35 @@ using Xunit;
 namespace CustomStringEnumerator.Tests
 {
     // Do not change the name of this class
-    public class CustomStringEnumerator :  IEnumerable<string>
+    public class CustomStringEnumerator :  IEnumerable<string?>
     {
-        private readonly IEnumerable<string> _originalCollection;
+        private readonly IEnumerable<string?> _originalCollection;
         private readonly EnumeratorConfig _enumeratorConfig;
         /// <summary> Constructor </summary>
         /// <exception cref="System.ArgumentNullException">If a collection is null</exception>
         /// <exception cref="System.ArgumentNullException">If an config is null</exception>
-        public CustomStringEnumerator(IEnumerable<string> collection, EnumeratorConfig config)
+        public CustomStringEnumerator(IEnumerable<string?> collection, EnumeratorConfig config)
         {
             if(config == null)
                 throw new ArgumentNullException($"The {config} paramater is required");
+
+            if(collection == null)
+                throw new ArgumentNullException($"The {collection} paramater is required");
 
             _originalCollection = collection;
             _enumeratorConfig = config;
         }
 
-        public IEnumerator<string> GetEnumerator()
+        public IEnumerator<string?> GetEnumerator()
         {
             foreach(var item in _originalCollection)
             {
+                var safeItem = item?? String.Empty;
                 if(
-                    (_enumeratorConfig.MinLength < 0 || item.Length >= _enumeratorConfig.MinLength) &&
-                    (_enumeratorConfig.MaxLength < 0 || item.Length <= _enumeratorConfig.MaxLength) &&
-                    (_enumeratorConfig.StartWithCapitalLetter == false || !String.IsNullOrWhiteSpace(item) && item.Length > 0 && Char.IsUpper(item[0])) &&
-                    (_enumeratorConfig.StartWithDigit == false || !String.IsNullOrWhiteSpace(item) && item.Length > 0 && Char.IsNumber(item[0]) )
+                    (_enumeratorConfig.MinLength < 0 || safeItem.Length >= _enumeratorConfig.MinLength) &&
+                    (_enumeratorConfig.MaxLength < 0 || safeItem.Length <= _enumeratorConfig.MaxLength) &&
+                    (_enumeratorConfig.StartWithCapitalLetter == false || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsUpper(item[0])) &&
+                    (_enumeratorConfig.StartWithDigit == false || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsNumber(item[0]) )
                 )
                     yield return item;
             }
@@ -51,6 +55,7 @@ namespace CustomStringEnumerator.Tests
         [InlineData(10, new[]{"Any string", "abc", "no", "yep"}, new []{"Any string"})]
         [InlineData(15, new[]{"Any string", "abc", "no", "yep"}, new string[]{})]
         [InlineData(2, new[]{"Any string", "abc", "no", "yep"}, new []{"Any string", "abc", "no", "yep"})]
+        [InlineData(2, new[]{"Any string", null, "no", "yep", "", "    "}, new []{"Any string", "no", "yep", "    "})]
         public void WhenGivenAStringCollectionWithMinimalValue_ReturnsAFilteredStringCollection(int minimalLength, string[] inputCollection, string[] filteredInputCollection)
         {
             var config = new EnumeratorConfig() { MinLength = minimalLength };
@@ -63,6 +68,7 @@ namespace CustomStringEnumerator.Tests
         [InlineData(3, new[]{"Any string", "abc", "no", "yep"}, new[]{"abc", "no", "yep"})]
         [InlineData(10, new[]{"Any string", "abc", "no", "yep"}, new []{"Any string", "abc", "no", "yep"})]
         [InlineData(2, new[]{"Any string", "abc", "no", "yep"}, new []{"no"})]
+        [InlineData(2, new[]{"Any string", "abc", null, "no", "", "yep", "  "}, new []{null, "no", "", "  "})]
         [InlineData(1, new[]{"Any string", "abc", "no", "yep"}, new string[]{})]
         public void WhenGivenAStringCollectionWithMaximumValue_ReturnsAFilteredStringCollection(int maxLength, string[] inputCollection, string[] filteredInputCollection)
         {
