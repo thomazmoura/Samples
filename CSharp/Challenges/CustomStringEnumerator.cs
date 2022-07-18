@@ -32,10 +32,10 @@ namespace CustomStringEnumerator.Tests
             {
                 var safeItem = item?? String.Empty;
                 if(
-                    (_enumeratorConfig.MinLength < 0 || safeItem.Length >= _enumeratorConfig.MinLength) &&
-                    (_enumeratorConfig.MaxLength < 0 || safeItem.Length <= _enumeratorConfig.MaxLength) &&
-                    (_enumeratorConfig.StartWithCapitalLetter == false || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsUpper(item[0])) &&
-                    (_enumeratorConfig.StartWithDigit == false || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsNumber(item[0]) )
+                    MinLengthConditionIsSatisfied(safeItem) &&
+                    MaxLengthConditionIsSatisfied(safeItem) &&
+                    StartsWithCapitalLetterConditionIsSatisfied(safeItem) &&
+                    StartsWithDigitConditionIsSatisfied(safeItem)
                 )
                     yield return item;
             }
@@ -45,6 +45,14 @@ namespace CustomStringEnumerator.Tests
         {
             return GetEnumerator();
         }
+
+        private bool MinLengthConditionIsSatisfied(string item) => _enumeratorConfig.MinLength < 0 || item.Length >= _enumeratorConfig.MinLength;
+        private bool MaxLengthConditionIsSatisfied(string item) => _enumeratorConfig.MaxLength < 0 || item.Length <= _enumeratorConfig.MaxLength;
+        private bool StartsWithCapitalLetterConditionIsSatisfied(string item) => _enumeratorConfig.StartWithCapitalLetter == false
+            || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsUpper(item[0]);
+        private bool StartsWithDigitConditionIsSatisfied(string item) => _enumeratorConfig.StartWithDigit == false
+            || !String.IsNullOrEmpty(item) && item.Length > 0 && Char.IsNumber(item[0]) ;
+
     }
 
     public class CustomStringEnumeratorTests
