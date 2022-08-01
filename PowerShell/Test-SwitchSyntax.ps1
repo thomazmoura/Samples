@@ -2,7 +2,7 @@ Write-Output "Insert a number for the day of the week (1~7 with 1 being sunday a
 
 $InputValue = Read-Host 
 $InputNumber = $InputValue -as [int]
-if( !($InputNumber) ) {
+if( $InputNumber -eq $null ) {
   Write-Error "The input value is not a valid number" -ErrorAction Stop
 }
 
