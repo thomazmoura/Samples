@@ -1,10 +1,14 @@
 // Silence some warnings so they don't distract from the exercise.
 #![allow(unused_variables)]
+use rand::*;
 
 fn main() {
-    let width = 4;
-    let height = 7;
-    let depth = 10;
+    let mut random_handler = thread_rng();
+    let width = random_handler.gen_range(0..100);
+    let height = random_handler.gen_range(0..50);
+    let depth = random_handler.gen_range(0..10);
+
+    println!("The input for this function is: (width={width}, height={height}, depth={depth})");
     // 1. Try running this code with `cargo run` and take a look at the error.
     //
     // See if you can fix the error. It is right around here, somewhere.  If you succeed, then
