@@ -5,6 +5,10 @@ fn main() {
     let first_string = "Rust World";
     println!("Hello {first_string}! From unmutable string.");
 
+    println!("\nThis is how you can print a simple string value (classical way):");
+    let classical_string = "Rusty World";
+    println!("Hello {}! From unmutable string with the classical less cool way.", classical_string);
+
     println!("\nThis how you make a mutable value:");
     let mut mutable_string = "First value";
     println!("This is the value of mutable_string before mutation: {mutable_string}");
