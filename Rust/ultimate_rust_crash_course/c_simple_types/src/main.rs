@@ -23,7 +23,19 @@ fn main() {
     // Use array indexing.  Done correctly, `cargo run` will produce the additional output
     // "Ding, you found 13!"
     //
+    
+    println!("\nReferencing directly:");
     ding(series[6]);
+
+    println!("\nReferencing through iteration:");
+    for shoot in series {
+        ding(shoot);
+    }
+
+    println!("\nReferencing through index:");
+    for i in 0..=6 { //..= syntax is an inclusive range
+        ding(series[i]);
+    }
 
     let mess = ([3, 2], 3.14, [(false, -3), (true, -100)], 5, "candy");
     // 4. Pass the `on_off` function the value `true` from the variable `mess`.  Done correctly,

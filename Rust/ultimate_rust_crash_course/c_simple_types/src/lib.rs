@@ -9,6 +9,8 @@ pub fn print_array(a: [f32; 2]) {
 pub fn ding(x: i32) {
     if x == 13 {
         println!("Ding, you found 13!");
+    } else {
+        println!("Tough luck, {x} is not the number we are looking for.");
     }
 }
 
