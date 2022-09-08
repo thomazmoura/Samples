@@ -28,7 +28,7 @@ fn main() {
     // Hint 1: use `.starts_with("b")` and `.contains("a")`
     // Hint 2: `&&` is the boolean "AND" operator
     //
-    if eat(arg) {
+    if eat(&arg) {
         println!("Might be bananas");
     } else {
         println!("Not bananas");
@@ -58,7 +58,7 @@ fn change(arg: &mut String) {
     }
 }
 
-fn eat(arg: String) -> bool {
+fn eat(arg: &str) -> bool {
     arg.starts_with("b") && arg.contains("a")
 }
 
