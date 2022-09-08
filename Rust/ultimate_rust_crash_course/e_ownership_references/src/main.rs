@@ -21,30 +21,47 @@ fn main() {
     //
     change(&mut arg);
     println!("I have many {}", arg);
+    println!();
 
     // 3. Write a function `eat` that accepts ownership of (consumes) a String and returns a bool
     // indicating whether or not the String both starts with a "b" AND contains an "a".
     // Hint 1: use `.starts_with("b")` and `.contains("a")`
     // Hint 2: `&&` is the boolean "AND" operator
     //
-    //if eat(arg) {
-    //    println!("Might be bananas");
-    //} else {
-    //    println!("Not bananas");
-    //}
+    if eat(arg) {
+        println!("Might be bananas");
+    } else {
+        println!("Not bananas");
+    }
+    println!();
 
     // Try running this program with "boat", "banana", and "grapes" as the arguments :-)
 
     // Challenge: Write a function "add" that takes *references* to two integer arguments,
     // dereferences them and adds them together, and returns the result.
     //
-    // println!("1 + 2 = {}, even via references", add(&1, &2));
+    println!("1 + 2 = {}, even via references", add(&1, &2));
 }
 
 fn inspect(arg: &str) {
-    if arg.ends_with("s")  {
+    if arg.ends_with("s") {
         println!("This is plural");
     } else {
         println!("This is singular");
     }
+    println!();
+}
+
+fn change(arg: &mut String) {
+    if !arg.ends_with("s") {
+        arg.push('s');
+    }
+}
+
+fn eat(arg: String) -> bool {
+    arg.starts_with("b") && arg.contains("a")
+}
+
+fn add(first_operand: &i32, second_operand: &i32) -> i32 {
+    first_operand + second_operand
 }
