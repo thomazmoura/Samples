@@ -35,15 +35,19 @@ fn take_shots(arrow_coords: &Vec<Coord>) -> Vec<Shot> {
     arrow_coords.iter().for_each(|coord| {
         println!();
         coord.print_description();
-        let shot = if coord.distance_from_center() < 1.0 {
-            println!("Bullseye! 🎯");
-            Shot::Bullseye
-        } else if coord.distance_from_center() < 5.0 {
-            println!("Hit it! 💥");
-            Shot::Hit(coord.distance_from_center())
-        } else {
-            println!("Not even close! 👎");
-            Shot::Miss
+        let shot = match coord.distance_from_center() {
+            distance if distance <= 1.0 => {
+                println!("Bullseye! 🎯");
+                Shot::Bullseye
+            }
+            distance if distance <= 5.0 => {
+                println!("Hit it! ✅");
+                Shot::Hit(distance)
+            }
+            _ => {
+                println!("Not even close! 👎");
+                Shot::Miss
+            }
         };
         shots.push(shot);
     });
