@@ -11,13 +11,8 @@ impl Shot {
     fn points(&self) -> i32 {
         match self {
             Self::Bullseye => 5,
-            Self::Hit(distance) => {
-                if distance < &3.0 {
-                    2
-                } else {
-                    1
-                }
-            }
+            Self::Hit(distance) if distance < &3.0 => 2,
+            Self::Hit(distance) => 1,
             Self::Miss => 0,
         }
     }
@@ -35,7 +30,7 @@ fn main() {
     println!("Final point total is: {}", total);
 }
 
-fn take_shots(arrow_coords: &Vec<Coord>) -> Vec<Shot>{
+fn take_shots(arrow_coords: &Vec<Coord>) -> Vec<Shot> {
     let mut shots: Vec<Shot> = Vec::new();
     arrow_coords.iter().for_each(|coord| {
         println!();
