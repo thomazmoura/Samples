@@ -1,16 +1,25 @@
 using System;
 using System.Collections.Generic;
 
-public class Solution {
-    public String solution(String s) {
+public class Solution
+{
+    public String solution(String s)
+    {
         char c = s[0];
-        if ( Char.IsUpper(c) ) {
+        if (Char.IsUpper(c))
+        {
             return "upper";
-        } else if (Char.IsLower(c)) {
+        }
+        else if (Char.IsLower(c))
+        {
             return "lower";
-        } else if (Char.IsDigit(c)) {
+        }
+        else if (Char.IsDigit(c))
+        {
             return "digit";
-        } else {
+        }
+        else
+        {
             return "other";
         }
     }
