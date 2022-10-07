@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncOverSyncTester.Worker"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncOverSyncTester.API", "AsyncOverSyncTester.API\AsyncOverSyncTester.API.csproj", "{92BBAFA1-9656-442B-A9A5-07696069FCC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncOverSyncTester.Tests", "AsyncOverSyncTester.Tests\AsyncOverSyncTester.Tests.csproj", "{67AEBAA2-F22B-410C-A83A-E41440C92AE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{92BBAFA1-9656-442B-A9A5-07696069FCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92BBAFA1-9656-442B-A9A5-07696069FCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92BBAFA1-9656-442B-A9A5-07696069FCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67AEBAA2-F22B-410C-A83A-E41440C92AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AEBAA2-F22B-410C-A83A-E41440C92AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AEBAA2-F22B-410C-A83A-E41440C92AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AEBAA2-F22B-410C-A83A-E41440C92AE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

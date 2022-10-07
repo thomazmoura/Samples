@@ -13,6 +13,16 @@ public class Financiamento
     }
 }
 
+public class ConfiguracaoQualquer
+{
+    private readonly ConfiguracaoPadrao configuracao;
+
+    public ConfiguracaoQualquer(ConfiguracaoPadrao configuracao)
+    {
+        this.configuracao = configuracao;
+    }
+}
+
 public record FaixaDeParcelas (int Inicio, int Final, decimal Valor);
 
 public class ConfiguracaoPadrao
