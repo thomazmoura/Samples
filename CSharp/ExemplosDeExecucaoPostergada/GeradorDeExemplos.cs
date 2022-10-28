@@ -8,6 +8,7 @@ public class GeradorDeExemplos
     }
 
     internal string GerarNome() => _faker.Name.FullName();
+    internal int GerarCodigo() => (int)_faker.Random.UInt();
     internal bool GerarBooleano() => _faker.Random.Bool();
     internal DateTime GerarDataDeNascimento() => _faker.Date.Past(yearsToGoBack: 100);
     internal IEnumerable<UsuarioRastreavel> ObterUsuariosRastreaveis(IEnumerable<CriacaoDeUsuarioRastreavelDTO> criacaoDeUsuariosDTO)
@@ -35,5 +36,7 @@ internal enum CasoDeExemplo
     AlimentacaoComFiltrosForcadaELimitado,
     AlimentacaoComFiltrosPostergadaAny,
     AlimentacaoComFiltrosForcadaAny,
+    AlimentacaoComFiltrosDeLista,
+    AlimentacaoComFiltrosDeHashSet,
 }
 

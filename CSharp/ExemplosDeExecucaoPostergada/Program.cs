@@ -1,6 +1,9 @@
-﻿CasoDeExemplo casoDeExemplo;
+﻿using System.Diagnostics;
+
+CasoDeExemplo casoDeExemplo;
 string entradaDeCasoDeExemplo;
 var quantidadeDeExemplos = 5000000;
+var quantidadeDeIndices = 15000;
 
 if(!args.Any())
 {
@@ -17,8 +20,12 @@ else
 if (!Enum.TryParse<CasoDeExemplo>(entradaDeCasoDeExemplo, out casoDeExemplo))
     casoDeExemplo = CasoDeExemplo.ListaSimplesAleatoria;
 
+var stopWatch = new Stopwatch();
+stopWatch.Start();
 ExecutarCasoDeExemplo(casoDeExemplo);
+stopWatch.Stop();
 
+Console.WriteLine($"Tempo de execução: {stopWatch.Elapsed}");
 Console.WriteLine("Quantidade de chamadas realizadas:");
 var resumoDeChamadas = UsuarioRastreavel.ContadorDeChamadas
     .Select(contador => $"{contador.Key}: {contador.Value}");
@@ -127,7 +134,37 @@ void ExecutarCasoDeExemplo(CasoDeExemplo casoDeExemplo)
                 .Ativos().ToList()
                 .CujoNomeContenha("Silva").ToList()
                 .MaioresDeIdade().ToList()
-                .Any();
+                .Take(300).ToList();
+            break;
+        case CasoDeExemplo.AlimentacaoComFiltrosDeLista:
+            var matriculasValidas = Enumerable.Range(0, quantidadeDeIndices)
+                .Select(_ => geradorDeExemplos.GerarCodigo())
+                .ToList();
+            var dadosPraCriacaoComFiltroDeLista = Enumerable.Range(0, quantidadeDeExemplos)
+                .Select(_ => new CriacaoDeUsuarioRastreavelDTO());
+            var stopWatchLista = new Stopwatch();
+            stopWatchLista.Start();
+            var exemplosFiltradosFiltroDeLista = geradorDeExemplos
+                .ObterUsuariosRastreaveis(dadosPraCriacaoComFiltroDeLista)
+                .CujaMatriculaConsteNaLista(matriculasValidas)
+                .ToList();
+            stopWatchLista.Stop();
+            Console.WriteLine($"Consulta realizada em {stopWatchLista.Elapsed}");
+            break;
+        case CasoDeExemplo.AlimentacaoComFiltrosDeHashSet:
+            var matriculasValidasComoHashset = Enumerable.Range(0, quantidadeDeIndices)
+                .Select(_ => geradorDeExemplos.GerarCodigo())
+                .ToHashSet();
+            var dadosPraCriacaoComFiltroDeDicionario = Enumerable.Range(0, quantidadeDeExemplos)
+                .Select(_ => new CriacaoDeUsuarioRastreavelDTO());
+            var stopWatchHashSet = new Stopwatch();
+            stopWatchHashSet.Start();
+            var exemplosFiltradosDeDicionario = geradorDeExemplos
+                .ObterUsuariosRastreaveis(dadosPraCriacaoComFiltroDeDicionario)
+                .CujaMatriculaConsteNaLista(matriculasValidasComoHashset)
+                .ToList();
+            stopWatchHashSet.Stop();
+            Console.WriteLine($"Consulta realizada em {stopWatchHashSet.Elapsed}");
             break;
     }
 }
