@@ -10,7 +10,7 @@ public class GeradorDeExemplos
     internal string GerarNome() => _faker.Name.FullName();
     internal bool GerarBooleano() => _faker.Random.Bool();
     internal DateTime GerarDataDeNascimento() => _faker.Date.Past(yearsToGoBack: 100);
-    internal IEnumerable<UsuarioRastreavel> InserirUsuariosRastreaveis(IEnumerable<CriacaoDeUsuarioRastreavelDTO> criacaoDeUsuariosDTO)
+    internal IEnumerable<UsuarioRastreavel> ObterUsuariosRastreaveis(IEnumerable<CriacaoDeUsuarioRastreavelDTO> criacaoDeUsuariosDTO)
     {
         return criacaoDeUsuariosDTO.Select(dto => new UsuarioRastreavel()
         {
@@ -29,5 +29,11 @@ internal enum CasoDeExemplo
     ComFiltrosSimples,
     AlimentacaoComForeachELista,
     AlimentacaoComSelect,
+    AlimentacaoComFiltrosPostergada,
+    AlimentacaoComFiltrosForcada,
+    AlimentacaoComFiltrosPostergadaELimitado,
+    AlimentacaoComFiltrosForcadaELimitado,
+    AlimentacaoComFiltrosPostergadaAny,
+    AlimentacaoComFiltrosForcadaAny,
 }
 
