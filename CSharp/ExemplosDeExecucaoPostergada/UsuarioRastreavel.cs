@@ -39,8 +39,18 @@ public class UsuarioRastreavel
 
 public static class UsuarioRastreavelExtensions
 {
-    public static IQueryable<UsuarioRastreavel> MaioresDeIdade(this IQueryable<UsuarioRastreavel> usuarios)
+    public static IEnumerable<UsuarioRastreavel> MaioresDeIdade(this IEnumerable<UsuarioRastreavel> usuarios)
     {
         return usuarios.Where(usuario => (DateTime.UtcNow - usuario.DataDeNascimento).TotalDays / 365 >= 18);
+    }
+
+    public static IEnumerable<UsuarioRastreavel> CujoNomeContenha(this IEnumerable<UsuarioRastreavel> usuarios, string trechoDoNome)
+    {
+        return usuarios.Where(usuario => usuario.NomeCompleto.Contains(trechoDoNome));
+    }
+
+    public static IEnumerable<UsuarioRastreavel> Ativos(this IEnumerable<UsuarioRastreavel> usuarios)
+    {
+        return usuarios.Where(usuario => usuario.Ativo);
     }
 }

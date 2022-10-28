@@ -7,13 +7,16 @@ public class GeradorDeExemplos
         Randomizer.Seed = new Random(42);
     }
 
+    internal string GerarNome() => _faker.Name.FullName();
+    internal bool GerarBooleano() => _faker.Random.Bool();
+    internal DateTime GerarDataDeNascimento() => _faker.Date.Past(yearsToGoBack: 100);
     internal IEnumerable<UsuarioRastreavel> InserirUsuariosRastreaveis(IEnumerable<CriacaoDeUsuarioRastreavelDTO> criacaoDeUsuariosDTO)
     {
         return criacaoDeUsuariosDTO.Select(dto => new UsuarioRastreavel()
         {
-            NomeCompleto = dto.NomeCompleto ?? _faker.Name.FullName(),
-            Ativo = dto.Ativo ?? _faker.Random.Bool(),
-            DataDeNascimento = dto.DataDeNascimento ?? _faker.Date.Past(yearsToGoBack: 100)
+            NomeCompleto = dto.NomeCompleto ?? GerarNome(),
+            Ativo = dto.Ativo ?? GerarBooleano(),
+            DataDeNascimento = dto.DataDeNascimento ?? GerarDataDeNascimento()
         });
     }
 }
@@ -23,6 +26,8 @@ public record CriacaoDeUsuarioRastreavelDTO(DateTime? DataDeNascimento = null, b
 internal enum CasoDeExemplo
 {
     ListaSimplesAleatoria,
-    FiltroPorIdade,
+    ComFiltrosSimples,
+    AlimentacaoComForeachELista,
+    AlimentacaoComSelect,
 }
 

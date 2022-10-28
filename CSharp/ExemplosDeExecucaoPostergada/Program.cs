@@ -24,11 +24,40 @@ void ExecutarCasoDeExemplo(CasoDeExemplo casoDeExemplo)
             MostrarDadosDeExemplos(exemplos);
             break;
 
-        case CasoDeExemplo.FiltroPorIdade:
+        case CasoDeExemplo.ComFiltrosSimples:
             var dadosPraCriacaoComFiltro = Enumerable.Range(0, 10)
                 .Select(_ => new CriacaoDeUsuarioRastreavelDTO());
             var exemplosAcimaDaIdade = geradorDeExemplos.InserirUsuariosRastreaveis(dadosPraCriacaoComFiltro)
+                .Ativos()
+                .CujoNomeContenha("Silva")
                 .MaioresDeIdade();
+            MostrarDadosDeExemplos(exemplosAcimaDaIdade);
+            break;
+        case CasoDeExemplo.AlimentacaoComForeachELista:
+            var listaDeExemplo = new List<UsuarioRastreavel>();
+            var listaDeDadosDeCriacao = new List<CriacaoDeUsuarioRastreavelDTO>();
+            for(var i = 0; i <= 5000; i++)
+                listaDeDadosDeCriacao.Add(new CriacaoDeUsuarioRastreavelDTO());
+            foreach(var dadosDeCriacao in listaDeDadosDeCriacao)
+            {
+                var usuario = new UsuarioRastreavel();
+                usuario.NomeCompleto = dadosDeCriacao.NomeCompleto ?? geradorDeExemplos.GerarNome();
+                usuario.Ativo = dadosDeCriacao.Ativo ?? geradorDeExemplos.GerarBooleano();
+                usuario.DataDeNascimento = dadosDeCriacao.DataDeNascimento ?? geradorDeExemplos.GerarDataDeNascimento();
+                listaDeExemplo.Add(usuario);
+            }
+            MostrarDadosDeExemplos(listaDeExemplo);
+            break;
+        case CasoDeExemplo.AlimentacaoComSelect:
+            var usuariosDeExemplo = Enumerable.Range(0, 5000)
+                .Select(_ => new CriacaoDeUsuarioRastreavelDTO())
+                .Select(dto => new UsuarioRastreavel()
+                {
+                    NomeCompleto = dto.NomeCompleto ?? geradorDeExemplos.GerarNome(),
+                    Ativo = dto.Ativo ?? geradorDeExemplos.GerarBooleano(),
+                    DataDeNascimento = dto.DataDeNascimento ?? geradorDeExemplos.GerarDataDeNascimento()
+                });
+            MostrarDadosDeExemplos(usuariosDeExemplo);
             break;
     }
 }
