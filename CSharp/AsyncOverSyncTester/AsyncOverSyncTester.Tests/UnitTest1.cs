@@ -9,13 +9,12 @@ public class UnitTest1
     }
 
     [Theory]
-    [InlineData(5)]
-    public void Test1(int teste)
+    [InlineData(5, 5, "abc")]
+    public void Test1(int teste, int outroTeste, string whatever)
     {
         var numero = teste;
         numero.Should().Be(teste);
     }
-
 }
 
 public class ClasseQualquer

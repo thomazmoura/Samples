@@ -9,8 +9,6 @@ namespace TlsChecker
         static void Main(string[] args)
         {
             Console.WriteLine(ServicePointManager.SecurityProtocol);
-            
-
         }
     }
 }
