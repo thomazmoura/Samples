@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿var sorter = new Sorter();
+var unorderedList = args.Select(int.Parse).ToArray();
+var orderedList = sorter.Sort(unorderedList);
+
+Console.WriteLine(string.Join(" ", orderedList));
