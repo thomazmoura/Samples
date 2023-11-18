@@ -3,17 +3,17 @@ namespace BubbleSort.Console;
 
 public class Sorter
 {
-    private readonly bool _verbose;
-    public Sorter(bool verbose = false)
+    private readonly bool _isVerbose;
+    public Sorter(bool isVerbose = false)
     {
-        _verbose = verbose;
+        _isVerbose = isVerbose;
     }
 
     public int[] Sort(int[] unorderedList)
     {
         var orderedList = unorderedList;
         StringBuilder? verboseStringBuilder = null;
-        if(_verbose)
+        if(_isVerbose)
         {
             verboseStringBuilder = new StringBuilder();
         }
@@ -32,7 +32,7 @@ public class Sorter
         }
         if(verboseStringBuilder != null)
         {
-            Console.WriteLine(verboseStringBuilder.ToString());
+            System.Console.WriteLine(verboseStringBuilder.ToString());
         }
         return orderedList;
     }
