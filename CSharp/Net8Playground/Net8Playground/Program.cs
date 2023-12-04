@@ -7,12 +7,16 @@ var novoObjeto = new Objeto()
     Notas = [.. notasPrimeiroBimestre, .. notasSegundoBimestre]
 };
 Console.WriteLine($"Objeto: {JsonSerializer.Serialize(novoObjeto)}");
+var nome = "Teste";
+var quantidade = 5;
+var notas = string.Join<int>(", ", [9, 8, 7, 6, 5, 4]);
 
-var serializacaoDeTeste = /*lang=json,strict*/ """
+var serializacaoDeTeste = /*lang=json,strict*/ $$"""
 {
-    "Nome":"Teste",
-    "Quantidade":5,
-    "Notas":[9,8,7,6,5,4]}
+    "Nome":"{{nome}}",
+    "Quantidade":{{quantidade}},
+    "Notas":[{{notas}}]
+}
 """;
 
 var objetoDesserializado = JsonSerializer.Deserialize<Objeto>(serializacaoDeTeste)
@@ -68,3 +72,4 @@ public class ObjetoComConstrutorPrimario(string nome, int quantidade, IEnumerabl
 }
 
 public record ObjetoDTO(string Nome, int Quantidade, IEnumerable<int> Notas);
+
