@@ -1,0 +1,6 @@
+@Net8Playground.API_HostAddress = http://localhost:5040
+
+GET {{Net8Playground.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

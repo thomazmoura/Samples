@@ -1,4 +1,4 @@
-﻿IEnumerable<int> notasPrimeiroBimestre = [9, 8, 7];
+IEnumerable<int> notasPrimeiroBimestre = [9, 8, 7];
 int[] notasSegundoBimestre = [6, 5, 4];
 var novoObjeto = new Objeto()
 {

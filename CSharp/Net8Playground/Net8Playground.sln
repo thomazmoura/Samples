@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net8Playground", "Net8Playg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net6Playground", "Net6Playground\Net6Playground.csproj", "{E02EAA7D-D94B-4E9A-B086-EE117CBC5916}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net8Playground.API", "Net8Playground.API\Net8Playground.API.csproj", "{11582985-4774-4A8D-B35A-D95A24916124}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E02EAA7D-D94B-4E9A-B086-EE117CBC5916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E02EAA7D-D94B-4E9A-B086-EE117CBC5916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E02EAA7D-D94B-4E9A-B086-EE117CBC5916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11582985-4774-4A8D-B35A-D95A24916124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11582985-4774-4A8D-B35A-D95A24916124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11582985-4774-4A8D-B35A-D95A24916124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11582985-4774-4A8D-B35A-D95A24916124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
