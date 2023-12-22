@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "GRPCSample.Client";
+
+package weather;
+
+// The greeting service definition.
+service Weather {
+  // Sends a greeting
+  rpc GetWeather (WeatherRequest) returns (WeatherReply);
+}
+
+// The request message containing the user's name.
+message WeatherRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message WeatherReply {
+  string weather = 1;
+  string temperature = 2;
+}
+
