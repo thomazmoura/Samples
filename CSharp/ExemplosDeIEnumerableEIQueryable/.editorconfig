@@ -1,0 +1,45 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+# All files
+[*]
+indent_style = space
+charset = utf-8
+
+# C#/Visual Studio files - precisam usar UTF-8 com BOM porque o Visual Studio não suporta bem UTF-8 sem BOM
+[*.{cs,csproj,sln,config,cshtml,sql,ps1,asax}]
+charset = utf-8-bom
+
+# C# files
+[*.cs]
+csharp_prefer_braces = when_multiline
+csharp_style_namespace_declarations = file_scoped
+csharp_style_prefer_primary_constructors = false
+dotnet_naming_rule.instance_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.instance_fields_should_be_camel_case.symbols = instance_fields
+dotnet_naming_rule.instance_fields_should_be_camel_case.style = instance_field_style
+
+dotnet_naming_symbols.instance_fields.applicable_kinds = field
+
+dotnet_naming_style.instance_field_style.capitalization = camel_case
+dotnet_naming_style.instance_field_style.required_prefix = _
+
+# C# diagnostics
+# Ignorar avisos de falta de comentário XML para propriedades públicas
+dotnet_diagnostic.CS1591.severity = none
+# Ignorar avisos de método async sem await no corpo
+dotnet_diagnostic.CS1998.severity = none
+# Ignorar retornos descartados (para evitar avisos em APIs fluent)
+dotnet_diagnostic.IDE0058.severity = none
+# Ignorar sugestões de simplificar ToList() 
+dotnet_diagnostic.IDE0305.severity = none
+# Ignorar avisos de .ToString() serem dependentes do Culture 
+dotnet_diagnostic.CA1304.severity = none
+dotnet_diagnostic.CA1305.severity = none
+dotnet_diagnostic.CA1310.severity = none
+dotnet_diagnostic.CA1311.severity = none
+# Ignorar avisos de melhor performance para logs
+dotnet_diagnostic.CA1848.severity = none
+
+# Xml files
+[*.xml]
+indent_size = 2
