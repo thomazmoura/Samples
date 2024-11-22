@@ -16,8 +16,8 @@ public class ContextoDesignTimeFactory : IDesignTimeDbContextFactory<ContextoDeE
     public ContextoDeExemplo CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ContextoDeExemplo>();
-        // optionsBuilder.UseNpgsql(_configuration.GetConnectionString(nameof(Contexto)));
-         optionsBuilder.UseNpgsql(_configuration.GetConnectionString(nameof(ContextoDeExemplo))); // Specify the migrations assembly if needed
+        optionsBuilder.UseSqlServer(_configuration.GetConnectionString(nameof(ContextoDeExemplo)));
+        //optionsBuilder.UseNpgsql(_configuration.GetConnectionString(nameof(ContextoDeExemplo)));
 
         return new ContextoDeExemplo(optionsBuilder.Options);
     }
