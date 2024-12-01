@@ -11,18 +11,24 @@ public class Worker : BackgroundService
     private int _verificacaoDeSerPar = 0;
     private readonly ILogger<Worker> _logger;
 
-    public Worker(ILogger<Worker> logger)
+    private readonly IServiceProvider _serviceProvider;
+    public Worker(ILogger<Worker> logger, IServiceProvider serviceProvider)
     {
         _logger = logger;
         Randomizer.Seed = new Random(42);
+        _serviceProvider = serviceProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var stopWatch = Stopwatch.StartNew();
+        using var escopo = _serviceProvider.CreateScope();
+        var contexto = escopo.ServiceProvider.GetRequiredService<Contexto>();
         _logger.LogInformation("Iniciando sistema");
-        var pessoas = GerarPessoas().ToList();
 
+        GarantirDadosDeExemplo(contexto);
+
+        var pessoas = contexto.Pessoas;
         var pessoasComIdPar = pessoas
             .Where(IdSejaPar);
         var pessoasComIdImpar = pessoas
@@ -55,7 +61,7 @@ public class Worker : BackgroundService
     {
         var faker = new Faker("pt_BR");
 
-        return Enumerable.Range(0, 15000)
+        return Enumerable.Range(0, 150000)
             .Select(indice =>
             {
                 var pessoa = new Person();
@@ -67,6 +73,17 @@ public class Worker : BackgroundService
                     DataDeNascimento = pessoa.DateOfBirth
                 };
             });
+    }
+
+    private void GarantirDadosDeExemplo(Contexto contexto)
+    {
+        if (contexto.Pessoas.Any())
+            return;
+
+        var pessoas = GerarPessoas();
+        contexto.AddRange(pessoas);
+        contexto.SaveChangesAsync();
+
     }
 
     private bool IdSejaPar(Pessoa pessoa)
@@ -87,7 +104,8 @@ public class Worker : BackgroundService
         foreach (var pessoa in pessoas)
         {
             var aniversario = (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month);
-            pessoa.PessoasAtivasComMesmaDataDeAniversario = pessoas.Where(pessoa => aniversario == (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month));
+            // Mencionar comportamento na ausência de  do ToList
+            pessoa.PessoasAtivasComMesmaDataDeAniversario = pessoas.Where(pessoa => aniversario == (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month)).ToList();
         }
         stopWatch.Stop();
         _logger.LogInformation("\nA definição de pessoas com o mesmo aniversário demorou:\n {Duracao}\n\n", stopWatch.Elapsed);

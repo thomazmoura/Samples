@@ -1,6 +1,6 @@
 ﻿namespace ExemplosDeIEnumerableEIQueryable.Dados;
 
-public class ContextoDesignTimeFactory : IDesignTimeDbContextFactory<ContextoDeExemplo>
+public class ContextoDesignTimeFactory : IDesignTimeDbContextFactory<Contexto>
 {
     private IConfiguration _configuration { get; set; }
 
@@ -13,12 +13,12 @@ public class ContextoDesignTimeFactory : IDesignTimeDbContextFactory<ContextoDeE
             .Build();
     }
 
-    public ContextoDeExemplo CreateDbContext(string[] args)
+    public Contexto CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ContextoDeExemplo>();
-        optionsBuilder.UseSqlServer(_configuration.GetConnectionString(nameof(ContextoDeExemplo)));
+        var optionsBuilder = new DbContextOptionsBuilder<Contexto>();
+        optionsBuilder.UseSqlServer(_configuration.GetConnectionString(nameof(Contexto)));
         //optionsBuilder.UseNpgsql(_configuration.GetConnectionString(nameof(ContextoDeExemplo)));
 
-        return new ContextoDeExemplo(optionsBuilder.Options);
+        return new Contexto(optionsBuilder.Options);
     }
 }
