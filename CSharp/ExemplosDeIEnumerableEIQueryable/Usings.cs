@@ -1,8 +1,11 @@
-﻿global using ExemplosDeIEnumerableEIQueryable.Dados;
+﻿global using Bogus;
+global using ExemplosDeIEnumerableEIQueryable.Dados;
 global using ExemplosDeIEnumerableEIQueryable.Entidades;
+global using ExemplosDeIEnumerableEIQueryable.Servicos;
+global using ExemplosDeIEnumerableEIQueryable;
 global using Microsoft.EntityFrameworkCore.Design;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
-global using Npgsql.EntityFrameworkCore.PostgreSQL;
+global using System.Diagnostics;
 global using System.IO;
 global using System;
