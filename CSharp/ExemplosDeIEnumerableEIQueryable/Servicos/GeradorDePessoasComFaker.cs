@@ -9,17 +9,19 @@ public class GeradorDePessoasComFaker : IGeradorDePessoas
         Randomizer.Seed = new Random(42);
     }
 
-    public IEnumerable<Pessoa> GerarPessoas(int quantidade)
+    public IEnumerable<Pessoa> GerarPessoas(int quantidade, bool pularId = false)
     {
         var faker = new Faker("pt_BR");
 
         return Enumerable.Range(0, quantidade)
             .Select(indice =>
             {
+                _seed++;
+                var id = pularId ? 0 : _seed;
                 var pessoa = new Person();
                 return new Pessoa()
                 {
-                    Id = _seed++,
+                    Id = id,
                     Nome = pessoa.FullName,
                     Ativo = pessoa.Random.Bool(0.8f),
                     DataDeNascimento = pessoa.DateOfBirth

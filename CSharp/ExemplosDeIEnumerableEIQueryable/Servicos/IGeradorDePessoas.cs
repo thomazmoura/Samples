@@ -2,6 +2,6 @@
 
 public interface IGeradorDePessoas
 {
-    IEnumerable<Pessoa> GerarPessoas(int quantidade);
+    IEnumerable<Pessoa> GerarPessoas(int quantidade, bool pularId = false);
     int ObterSeed();
 }
