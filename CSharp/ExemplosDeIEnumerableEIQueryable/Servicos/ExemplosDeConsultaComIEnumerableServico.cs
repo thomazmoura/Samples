@@ -21,13 +21,14 @@ public class ExemplosDeConsultaComIEnumerableServico : IExemplosDeConsultaServic
         var stopWatchGeral = Stopwatch.StartNew();
         _logger.LogInformation("Iniciando sistema");
 
-        var pessoas = _geradorDePessoas.GerarPessoas(15000)
+        var pessoas = _geradorDePessoas.GerarPessoas(150000)
             .ToList();
 
         var pessoasComIdPar = pessoas
             .Where(IdSejaPar);
         var pessoasComIdImpar = pessoas
             .Where(pessoa => !IdSejaPar(pessoa));
+
         var pessoasAtivas = pessoas
             .Where(EstaAtivo);
         var quantidadePar = pessoasComIdPar.Count();
@@ -67,11 +68,13 @@ public class ExemplosDeConsultaComIEnumerableServico : IExemplosDeConsultaServic
     private void DefinirPessoasComOMesmoAniversario(IEnumerable<Pessoa> pessoas)
     {
         var stopWatch = Stopwatch.StartNew();
+        var pessoasAgrupadasPorAniversario = pessoas
+            .GroupBy(pessoa => (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month), pessoa => pessoa)
+            .ToDictionary(grupo => grupo.Key);
         foreach (var pessoa in pessoas)
         {
             var aniversario = (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month);
-            // Mencionar comportamento na ausência de  do ToList
-            pessoa.PessoasAtivasComMesmaDataDeAniversario = pessoas.Where(pessoa => aniversario == (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month)).ToList();
+            pessoa.PessoasAtivasComMesmaDataDeAniversario = pessoasAgrupadasPorAniversario[aniversario];
         }
         stopWatch.Stop();
         _logger.LogInformation("\nA definição de pessoas com o mesmo aniversário demorou:\n {Duracao}\n\n", stopWatch.Elapsed);

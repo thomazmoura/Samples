@@ -11,14 +11,12 @@ public class GeradorDePessoasComFaker : IGeradorDePessoas
 
     public IEnumerable<Pessoa> GerarPessoas(int quantidade, bool pularId = false)
     {
-        var faker = new Faker("pt_BR");
-
         return Enumerable.Range(0, quantidade)
             .Select(indice =>
             {
                 _seed++;
                 var id = pularId ? 0 : _seed;
-                var pessoa = new Person();
+                var pessoa = new Bogus.Person("pt_BR");
                 return new Pessoa()
                 {
                     Id = id,

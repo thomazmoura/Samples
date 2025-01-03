@@ -37,6 +37,8 @@ dotnet_diagnostic.CA1304.severity = none
 dotnet_diagnostic.CA1305.severity = none
 dotnet_diagnostic.CA1310.severity = none
 dotnet_diagnostic.CA1311.severity = none
+# Ignorar avisos de método que pode ser tornado estático
+dotnet_diagnostic.CA1822.severity = none
 # Ignorar avisos de melhor performance para logs
 dotnet_diagnostic.CA1848.severity = none
 
