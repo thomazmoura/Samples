@@ -18,51 +18,80 @@ public class ExemplosDeConsultaComIQueryableServico : IExemplosDeConsultaServico
 
     public async Task ExecutarAsync(CancellationToken cancellationToken)
     {
-
+        await GarantirDadosAsync(cancellationToken);
         var stopWatchGeral = Stopwatch.StartNew();
         _logger.LogInformation("Iniciando sistema");
 
-        var pessoas = ObterPessoas()
-            .Where(pessoa => !string.IsNullOrWhiteSpace(pessoa.Nome))
-            .Take(10)
-            .ToList();
-
-        var nomes = string.Join(", ", pessoas);
-        Console.WriteLine(nomes);
+        var pessoasQueGastaramMaisDe500reais = ObterPessoas()
+        .Select(pessoa => new
+        {
+            NomeDaPessoa = pessoa.Nome,
+            Gasto = pessoa.Compras.SelectMany(compra => compra.ItensDaCompra.Select(item => item.Quantidade * item.Produto.ValorUnitario)).Sum()
+        })
+        .Where(pessoa => pessoa.Gasto > 5000)
+        .ToList();
+        var resultado = string.Join("\n", pessoasQueGastaramMaisDe500reais.Select(pessoa => $"{pessoa.NomeDaPessoa} - {pessoa.Gasto}"));
+        _logger.LogInformation("\n ->> Pessoas que gastaram mais de 500 reais ({Quantidade}):\n{Resultado}", pessoasQueGastaramMaisDe500reais.Count, resultado);
 
         stopWatchGeral.Stop();
         _logger.LogInformation("\nA execução demorou:\n {Duracao}\n\n", stopWatchGeral.Elapsed);
     }
 
-    private bool EstaAtivo(Pessoa pessoa)
-    {
-        return pessoa.Ativo;
-    }
-
-    private void DefinirPessoasComOMesmoAniversario(IEnumerable<Pessoa> pessoas)
-    {
-        var stopWatch = Stopwatch.StartNew();
-        var pessoasAgrupadasPorAniversario = pessoas
-            .GroupBy(pessoa => (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month), pessoa => pessoa)
-            .ToDictionary(grupo => grupo.Key);
-        foreach (var pessoa in pessoas)
-        {
-            var aniversario = (pessoa.DataDeNascimento.Day, pessoa.DataDeNascimento.Month);
-            pessoa.PessoasAtivasComMesmaDataDeAniversario = pessoasAgrupadasPorAniversario[aniversario];
-        }
-        stopWatch.Stop();
-        _logger.LogInformation("\nA definição de pessoas com o mesmo aniversário demorou:\n {Duracao}\n\n", stopWatch.Elapsed);
-    }
-
     private IQueryable<Pessoa> ObterPessoas()
     {
-        if (!_contexto.Pessoas.Any())
-        {
-            var pessoas = _geradorDePessoas.GerarPessoas(15000, pularId: true);
-            _contexto.Pessoas.AddRange(pessoas);
-            _contexto.SaveChanges();
-        }
         return _contexto.Pessoas;
     }
+
+    private async Task GarantirDadosAsync(CancellationToken cancellationToken)
+    {
+        var stopWatchCriacao = Stopwatch.StartNew();
+        if (!_contexto.Pessoas.Any())
+        {
+            var pessoas = _geradorDePessoas.GerarPessoas(150000, pularId: true);
+            _contexto.Pessoas.AddRange(pessoas);
+            await _contexto.SaveChangesAsync(cancellationToken);
+        }
+        if (!_contexto.Produtos.Any())
+        {
+            var produtos = _geradorDePessoas.GerarProdutos(5000);
+            _contexto.Produtos.AddRange(produtos);
+            await _contexto.SaveChangesAsync(cancellationToken);
+        }
+        if (!_contexto.Compras.Any())
+        {
+            var compras = _geradorDePessoas.GerarCompras(_contexto.Pessoas.ToList(), _contexto.Produtos.ToList());
+            _contexto.Compras.AddRange(compras);
+            await _contexto.SaveChangesAsync(cancellationToken);
+        }
+        stopWatchCriacao.Stop();
+        _logger.LogInformation("A criação de dados no banco demorou: {Duracao}", stopWatchCriacao.Elapsed);
+    }
 }
+
+//var quantidadeDePessoasQueCompraramMaisDe2Vezes = ObterPessoas()
+//.Where(pessoa => pessoa.Compras.Count() > 2)
+//.Count();
+//_logger.LogInformation(
+//"\n ->> Quantidade de pessoas que compraram mais de 2 vezes: {Quantidade}",
+//quantidadeDePessoasQueCompraramMaisDe2Vezes
+//);
+
+//var quantidadeDeMacedos = ObterPessoas()
+//.Where(pessoa => pessoa.Nome.EndsWith("Macedo"))
+//.Count();
+//_logger.LogInformation(
+//"\n ->> Quantidade de pessoas que têm o sobrenome Macedo: {Quantidade}",
+//quantidadeDeMacedos
+//);
+
+//var pessoasQueGastaramMaisDe500reais = ObterPessoas()
+//.Select(pessoa => new
+//{
+//NomeDaPessoa = pessoa.Nome,
+//Gasto = pessoa.Compras.SelectMany(compra => compra.ItensDaCompra.Select(item => item.Quantidade * item.Produto.ValorUnitario)).Sum()
+//})
+//.Where(pessoa => pessoa.Gasto > 5000)
+//.ToList();
+//var resultado = string.Join("\n", pessoasQueGastaramMaisDe500reais.Select(pessoa => $"{pessoa.NomeDaPessoa} - {pessoa.Gasto}"));
+//_logger.LogInformation("\n ->> Pessoas que gastaram mais de 500 reais ({Quantidade}):\n{Resultado}", pessoasQueGastaramMaisDe500reais.Count, resultado);
 

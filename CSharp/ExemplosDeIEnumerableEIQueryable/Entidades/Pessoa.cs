@@ -8,4 +8,6 @@ public class Pessoa
     public required bool Ativo { get; set; }
     public required DateTime DataDeNascimento { get; set; }
     public IEnumerable<Pessoa> PessoasAtivasComMesmaDataDeAniversario { get; set; } = [];
+
+    public virtual ICollection<Compra> Compras { get; set; } = [];
 }
