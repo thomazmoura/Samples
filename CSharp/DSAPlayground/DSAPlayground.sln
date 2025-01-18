@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSAPlayground", "DSAPlayground\DSAPlayground.csproj", "{3BA042C9-F3D6-4CC5-BD2B-DA6742B37415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSAPlayground.Tests", "DSAPlayground.Tests\DSAPlayground.Tests.csproj", "{D93981CF-8B44-4A82-9388-AC258D4EC489}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BA042C9-F3D6-4CC5-BD2B-DA6742B37415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA042C9-F3D6-4CC5-BD2B-DA6742B37415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA042C9-F3D6-4CC5-BD2B-DA6742B37415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA042C9-F3D6-4CC5-BD2B-DA6742B37415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D93981CF-8B44-4A82-9388-AC258D4EC489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D93981CF-8B44-4A82-9388-AC258D4EC489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D93981CF-8B44-4A82-9388-AC258D4EC489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D93981CF-8B44-4A82-9388-AC258D4EC489}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
