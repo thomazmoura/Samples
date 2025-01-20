@@ -70,6 +70,22 @@ public class CustomLinkedList<T> : IEnumerable<T>
         }
     }
 
+    public void Append(T item)
+    {
+        var customLinkedListItem = new CustomLinkedListItem<T>(item);
+        if (Head != null)
+        {
+            Head.Previous = customLinkedListItem;
+            customLinkedListItem.Next = Head;
+            Head = customLinkedListItem;
+        }
+        else
+        {
+            Head = customLinkedListItem;
+            Tail = customLinkedListItem;
+        }
+    }
+
     public IEnumerator<T> GetEnumerator()
     {
         var enumerator = new CustomLinkedListEnumerator<T>(Head);

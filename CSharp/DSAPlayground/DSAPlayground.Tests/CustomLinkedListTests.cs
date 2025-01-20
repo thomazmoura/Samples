@@ -55,4 +55,16 @@ public class CustomLinkedLinkTests
 
         customLinkedList.ShouldBe(output);
     }
+
+    [Theory]
+    [InlineData(new int[0], 5, new int[] { 5 })]
+    [InlineData(new int[] { 1, 2, 3 }, 5, new int[] { 5, 1, 2, 3 })]
+    public void Append_WhenPassingValidValues_ShouldInsertAnItemInTheBeggining(int[] input, int newValue, int[] output)
+    {
+        var customLinkedList = new CustomLinkedList<int>(input);
+
+        customLinkedList.Append(newValue);
+
+        customLinkedList.ShouldBe(output);
+    }
 }
