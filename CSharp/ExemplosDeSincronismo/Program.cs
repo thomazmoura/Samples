@@ -8,7 +8,7 @@ builder.Services
                 .EnableSensitiveDataLogging();
         }
     )
-    .AddScoped<IExemplosDeSincronismoServico, ExemploDeSincronismoUsandoRowVersion>()
+    .AddScoped<IExemplosDeSincronismoServico, ExemploDeSincronismoUsandoEF>()
     .AddScoped<IGarantidorDeDados, GarantidorDeDados>()
     .AddScoped<IGeradorDePessoas, GeradorDePessoasComFaker>()
     .AddHostedService<Worker>();

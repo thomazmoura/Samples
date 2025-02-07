@@ -32,6 +32,19 @@ namespace ExemplosDeSincronismo.Dados.Migrations
                 nullable: true);
 
             migrationBuilder.CreateTable(
+                name: "Checksums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Checksum = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Checksums", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PessoasStage1",
                 columns: table => new
                 {
@@ -42,6 +55,7 @@ namespace ExemplosDeSincronismo.Dados.Migrations
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     DataDeNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Version = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Checksum = table.Column<int>(type: "int", nullable: false),
                     OriginalId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -84,6 +98,9 @@ namespace ExemplosDeSincronismo.Dados.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Pessoas_PessoasStage1_PessoaStage1Id",
                 table: "Pessoas");
+
+            migrationBuilder.DropTable(
+                name: "Checksums");
 
             migrationBuilder.DropTable(
                 name: "PessoasStage1");

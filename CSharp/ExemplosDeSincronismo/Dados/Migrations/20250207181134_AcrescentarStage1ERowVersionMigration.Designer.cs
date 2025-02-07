@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExemplosDeSincronismo.Dados.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250207050819_AcrescentarStage1ERowVersionMigration")]
+    [Migration("20250207181134_AcrescentarStage1ERowVersionMigration")]
     partial class AcrescentarStage1ERowVersionMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,22 @@ namespace ExemplosDeSincronismo.Dados.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ExemplosDeSincronismo.Dados.ResultadoDeChecksum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Checksum")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Checksums");
+                });
 
             modelBuilder.Entity("ExemplosDeSincronismo.Entidades.Compra", b =>
                 {
@@ -106,6 +122,9 @@ namespace ExemplosDeSincronismo.Dados.Migrations
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Checksum")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataDeNascimento")
                         .HasColumnType("datetime2");
