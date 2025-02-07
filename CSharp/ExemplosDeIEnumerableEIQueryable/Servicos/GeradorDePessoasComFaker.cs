@@ -60,7 +60,9 @@ public class GeradorDePessoasComFaker : IGeradorDePessoas
                     .Select(indice => new ItemDaCompra()
                     {
                         ProdutoId = faker.PickRandom(idsDeProdutos),
-                        Quantidade = faker.Random.Int(1, 10)
+                        Quantidade = faker.Random.Int(1, 10),
+                        ValorUnitario = faker.Random.Decimal(1.99m, 99.99m),
+                        NomeDoProduto = faker.Commerce.ProductName(),
                     }).ToList();
             }
         }

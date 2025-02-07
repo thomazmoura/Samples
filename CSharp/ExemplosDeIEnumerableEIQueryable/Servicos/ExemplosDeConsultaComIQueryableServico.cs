@@ -22,16 +22,24 @@ public class ExemplosDeConsultaComIQueryableServico : IExemplosDeConsultaServico
         var stopWatchGeral = Stopwatch.StartNew();
         _logger.LogInformation("Iniciando sistema");
 
-        var pessoasQueGastaramMaisDe500reais = ObterPessoas()
-        .Select(pessoa => new
-        {
-            NomeDaPessoa = pessoa.Nome,
-            Gasto = pessoa.Compras.SelectMany(compra => compra.ItensDaCompra.Select(item => item.Quantidade * item.Produto.ValorUnitario)).Sum()
-        })
-        .Where(pessoa => pessoa.Gasto > 5000)
-        .ToList();
-        var resultado = string.Join("\n", pessoasQueGastaramMaisDe500reais.Select(pessoa => $"{pessoa.NomeDaPessoa} - {pessoa.Gasto}"));
-        _logger.LogInformation("\n ->> Pessoas que gastaram mais de 500 reais ({Quantidade}):\n{Resultado}", pessoasQueGastaramMaisDe500reais.Count, resultado);
+        var compras = await _contexto.Compras
+            .OrderBy(compra => compra.Id)
+            .Take(50)
+            .ToListAsync(cancellationToken);
+        //.Where(compra => compra.ItensDaCompra.Any(item => item.ValorUnitario > 50))
+        //.CountAsync(cancellationToken);
+        _logger.LogInformation("\n ->> Quantidade de compras com valor de mais de 50: ({Quantidade})", compras.Count);
+
+        //var pessoasQueGastaramMaisDe500reais = ObterPessoas()
+        //.Select(pessoa => new
+        //{
+        //NomeDaPessoa = pessoa.Nome,
+        //Gasto = pessoa.Compras.SelectMany(compra => compra.ItensDaCompra.Select(item => item.Quantidade * item.ValorUnitario)).Sum()
+        //})
+        //.Where(pessoa => pessoa.Gasto > 5000)
+        //.ToList();
+        //var resultado = string.Join("\n", pessoasQueGastaramMaisDe500reais.Select(pessoa => $"{pessoa.NomeDaPessoa} - {pessoa.Gasto}"));
+        //_logger.LogInformation("\n ->> Pessoas que gastaram mais de 500 reais ({Quantidade}):\n{Resultado}", pessoasQueGastaramMaisDe500reais.Count, resultado);
 
         stopWatchGeral.Stop();
         _logger.LogInformation("\nA execução demorou:\n {Duracao}\n\n", stopWatchGeral.Elapsed);

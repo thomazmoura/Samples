@@ -8,7 +8,7 @@ public class Compra
     public required int PessoaId { get; set; }
 
     public virtual Pessoa? Pessoa { get; set; }
-    public virtual ICollection<ItemDaCompra> ItensDaCompra { get; set; } = [];
+    public virtual IList<ItemDaCompra> ItensDaCompra { get; set; } = [];
 }
 
 public class ItemDaCompra
@@ -17,9 +17,10 @@ public class ItemDaCompra
     public int Quantidade { get; set; }
 
     public int CompraId { get; set; }
+    public required string NomeDoProduto { get; set; } 
+    public required decimal ValorUnitario { get; set; }
     public int ProdutoId { get; set; }
 
     public virtual Compra? Compra { get; set; }
-    public virtual Produto? Produto { get; set; }
 }
 
