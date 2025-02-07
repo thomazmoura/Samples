@@ -1,0 +1,11 @@
+﻿global using Bogus;
+global using ExemplosDeSincronismo.Dados;
+global using ExemplosDeSincronismo.Entidades;
+global using ExemplosDeSincronismo.Servicos;
+global using ExemplosDeSincronismo;
+global using Microsoft.EntityFrameworkCore.Design;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using System.Diagnostics;
+global using System.IO;
+global using System;
